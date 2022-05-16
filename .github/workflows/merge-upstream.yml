@@ -1,0 +1,65 @@
+env:
+  GITHUB_TOKEN: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+  INPUTS_REPOSITORY: ossc-db/pg_rman
+  INPUTS_BRANCH: ${{ github.job }}
+name: Merge
+on:
+  schedule:
+    - cron: '0 19 * * *'
+  workflow_dispatch:
+jobs:
+  master:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL_14_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL_13_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL_12_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL_11_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL_10_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL9_6_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL9_5_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL9_4_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL9_3_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
+  REL9_2_STABLE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rekgrpth/git-clone-shell-action@v1
+      - uses: rekgrpth/git-fetch-upstream-merge-push-shell-action@v1
