@@ -379,9 +379,28 @@ $ pg_rman show -a
 
 <h2 id="Standby-site.Backup">Standby-site Backup</h2>
 
-<p>If you use replication feature on PostgreSQL 9.0 later, you can get backup from standby-site.</p>
+<p>If you use replication feature on PostgreSQL 9.0 later, you can get backup from standby-site.
+The basic usage is the same as when using it with a single master server, so only the points that
+need attention are described.
+</p>
 
-<p>You should specify different options from usual use for getting backup from standby-site. In detail, you should specify the database cluster on standby-site by <code>-D</code>/<code>--pgdata</code> option. And you should specify information on master-site by connection options (<code>-d</code>/<code>--dbname</code>, <code>-h</code>/<code>--host</code>, <code>-p</code>/<code>--port</code>). In addition, you should specify information to connect standby-site by standby connection options (<code>--standby-host</code>, <code>--standby-port</code>).</p>
+<p>Archive WALs must also be taken when you take a backup of the standby-site.
+So, you need to prepare a shared disk and so on so that the archive area of the master can be
+accessed from the standby, or set archive_mode to 'always' at the standby-site.
+</p>
+
+<p>In the latter case, copy the primary's archive WALs (including history file) 
+when the standby-site is created to make sure that you can take back up all the files required for restoring.
+You can delete old archive WALs at the time of backup using --keep-arclog-files / --keep-arclog-days.
+But, since the deletion target is only the one which it take a backup, the master's archived WALs 
+are not deleted if you take a backup at standby-site.
+</p>
+
+<p>You should specify different options from usual use for getting backup from standby-site. 
+In detail, you should specify the database cluster on standby-site by <code>-D</code>/<code>--pgdata</code> option.
+And you should specify information on master-site by connection options (<code>-d</code>/<code>--dbname</code>, 
+<code>-h</code>/<code>--host</code>, <code>-p</code>/<code>--port</code>). In addition, you should specify information 
+to connect standby-site by standby connection options (<code>--standby-host</code>, <code>--standby-port</code>).</p>
 
 <pre><code>$ pg_rman init -B &lt;a backup catalog path&gt; -D &lt;(the database cluster path(on standby-site)&gt;
 </code></pre>
@@ -396,7 +415,7 @@ $ pg_rman show -a
 <li>the database cluster path of standby-site: /home/postgres/pgdata_sby</li>
 </ul>
 
-<p>Then, the backup from standby site can be done with the below command:</p>
+<p>Then, the backup from standby-site can be done with the below command:</p>
 
 <pre><code>$ pg_rman backup --pgdata=/home/postgres/pgdata_sby --backup-mode=full --host=master --standby-host=localhost --standby-port=5432
 </code></pre>
@@ -638,7 +657,7 @@ $ pg_ctl start
 
 <h2>Restore options</h2>
 
-<p>The parameters which are started with &ndash;recovery are same as parameters in recovery.conf. See also &ldquo;<a href="http://www.postgresql.org/docs/current/static/recovery-config.html">Recovery Configuration</a>&rdquo; for details.</p>
+<p>The parameters which are started with &ndash;&ndash;recovery are same as <a href=" https://www.postgresql.org/docs/current/runtime-config-wal.html#RUNTIME-CONFIG-WAL-RECOVERY-TARGET">Recovery Target</a> parameters.</p>
 
 <ul>
 <li><strong><code>--recovery-target-timeline TIMELINE</code></strong>
@@ -681,6 +700,15 @@ $ pg_ctl start
 
 <ul>
 <li>The archive WAL are copied to archive WAL storage area. If not specified, pg_rman makes symbolic link to archive WAL where are in the backup catalog directory.</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li><strong><code>-G PATH</code> / <code>--pgconf-path=PATH</code></strong>
+
+<ul>
+<li>The recovery-related parameters are configured when restoring. If you manage the postgresql.conf in different location of database cluster using <a href="http://www.postgresql.org/docs/current/runtime-config-file-locations.html"><code>data_directory</code></a> and so on, specify the absolute path. This option is provided version higher than 1.3.14.</p></li>
 </ul>
 </li>
 </ul>
@@ -744,7 +772,7 @@ $ pg_ctl start
 
 <h2>Standby connection options</h2>
 
-<p>Parameters to connect standby server. They are used only when you get backup from the standby site.</p>
+<p>Parameters to connect standby server. They are used only when you get backup from the standby-site.</p>
 
 <ul>
 <li><strong><code>--standby-host</code></strong>
