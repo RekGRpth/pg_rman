@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      CACHE_VERSION: 20210426  # to identify cache version
+      CACHE_VERSION: 20250124  # to identify cache version
 
     steps:
     - name: get current branch name
@@ -54,7 +54,7 @@ jobs:
 
     - name: cache builded resources
       id: cache-postgresql-core
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: "~/pgsql/${{ env.PGVERSION }}"
         key: ${{ env.PGVERSION }}-${{ env.CACHE_VERSION }}
