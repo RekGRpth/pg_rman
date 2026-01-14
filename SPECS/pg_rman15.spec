@@ -1,5 +1,5 @@
 # SPEC file for pg_rman
-# Copyright(C) 2009-2025 NIPPON TELEGRAPH AND TELEPHONE CORPORATION
+# Copyright(C) 2009-2026 NTT, Inc.
 
 %define _pgdir   /usr/pgsql-15
 %define _bindir  %{_pgdir}/bin
@@ -9,14 +9,14 @@
 ## Set general information for pg_rman.
 Summary:    Backup and Recovery Tool for PostgreSQL
 Name:       pg_rman
-Version:    1.3.18
+Version:    1.3.19
 Release:    1%{?dist}
 License:    BSD
 Group:      Applications/Databases
 Source0:    %{name}-%{version}-pg15.tar.gz
 URL:        https://github.com/ossc-db/pg_rman
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)
-Vendor:     NIPPON TELEGRAPH AND TELEPHONE CORPORATION
+Vendor:     NTT, Inc.
 
 ## We use postgresql-devel package
 BuildRequires:  postgresql15-devel, zlib-devel
@@ -58,6 +58,7 @@ rm -rf %{buildroot}
 
 # History of pg_rman.
 %changelog
+* Tue Jan 13 2026 - NTT OSS Center <sn.kato@ntt.com> 1.3.19-1
 * Mon Jul  7 2025 - NTT OSS Center <sn.kato@ntt.com> 1.3.18-1
 * Tue Jan 28 2025 - NTT OSS Center <zuowei.yan.tb@hco.ntt.co.jp> 1.3.17-1
 * Mon Dec  4 2023 - NTT OSS Center <zuowei.yan.tb@hco.ntt.co.jp> 1.3.16-1
