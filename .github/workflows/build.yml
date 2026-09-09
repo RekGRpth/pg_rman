@@ -117,7 +117,7 @@ jobs:
         pg_config --version
         cat $PGDATA/postgresql.conf
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: make install
       shell: bash -xe {0}
